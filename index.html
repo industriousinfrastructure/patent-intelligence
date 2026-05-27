@@ -162,16 +162,16 @@
 <section>
   <h2>The problem</h2>
   <p style="font-size:.88em; margin-bottom:.8em">
-    Material science is one of the densest patent spaces there is. Thousands of overlapping filings, ambiguous claim language, chemistry families spanning multiple subfields and jurisdictions. Getting a clear picture of where you can operate — or where to file — normally means one of two things:
+    Across every technical discipline a TTO covers — chemistry, pharma, biotech, engineering, medical devices, software — the patent landscape is dense, fast-moving, and difficult to read without specialist support. Thousands of overlapping filings, ambiguous claim language, competing jurisdictions. Getting a clear picture of where a researcher can operate, or where new IP should be filed, normally means one of two things:
   </p>
   <div class="col2" style="margin-bottom:.9em">
     <div class="card">
       <div class="card-title">Specialist consultant</div>
-      <p class="small">€300–600/h. Two to four weeks for a landscape report. Expensive, slow, and the output often isn't reusable.</p>
+      <p class="small">€300–600/h. Two to four weeks for a landscape report. Expensive, slow, and the output often can't be reused when the next question comes in.</p>
     </div>
     <div class="card">
       <div class="card-title">Enterprise platform</div>
-      <p class="small">PatSnap, Questel, Derwent — $15–40k/year. AI analysis is an add-on. Designed for large corporate IP teams, not research institutions.</p>
+      <p class="small">PatSnap, Questel, Derwent — $15–40k/year. AI analysis is an add-on. Built for large corporate IP teams, not research institutions working across many domains on constrained budgets.</p>
     </div>
   </div>
   <div class="quote">
@@ -419,6 +419,67 @@
   <p style="margin-top:3em; font-size:.55em; color:var(--ink3)">
     github.com/industriousinfrastructure/patent-intelligence
   </p>
+</section>
+
+<!-- ══ W1 · WALKTHROUGH INTRO ════════════════════════════════════════ -->
+<section class="center-slide">
+  <div style="margin-top:2em">
+    <p class="label" style="justify-content:center; display:flex; margin-bottom:1em">Tool walkthrough</p>
+    <h2 style="text-align:center; font-size:1.6em; color:var(--ink)">The working system —<br>built on a live MXene corpus</h2>
+    <p style="text-align:center; font-size:.85em; margin-top:.8em; max-width:580px; margin-left:auto; margin-right:auto">
+      The following screens are taken from the live tool, applied to a corpus of 14,000+ MXene-related patents filtered to the EU exposure view.
+    </p>
+    <div class="chips" style="justify-content:center; margin-top:1.5em">
+      <span class="chip">Chemistry family map</span>
+      <span class="chip">Risk drilldown</span>
+      <span class="chip">Patent detail + LLM reasoning</span>
+      <span class="chip">Whitespace analysis</span>
+    </div>
+  </div>
+</section>
+
+<!-- ══ W2 · SCREENSHOT — CHEMISTRY MAP ══════════════════════════════ -->
+<section>
+  <h2>Domain overview — chemistry family risk map</h2>
+  <p class="small muted" style="margin-bottom:.6em">Every technology family in the corpus is scored across H / M / L risk and given a verdict — Blocked, Constrained, or Open — based on the analysed patents. Jurisdiction filter applied here to EP + WO only.</p>
+  <div style="text-align:center">
+    <img src="screenshots/01_chemistry_map.png"
+         style="max-width:100%; max-height:460px; border-radius:8px; border:1px solid #e2e8f0; box-shadow:0 4px 16px rgba(15,23,42,.1)"
+         alt="Chemistry family FTO map showing H/M/L risk by family">
+  </div>
+</section>
+
+<!-- ══ W3 · SCREENSHOT — FAMILY DRILLDOWN ═══════════════════════════ -->
+<section>
+  <h2>Drilldown — H-risk patents with LLM reasoning</h2>
+  <p class="small muted" style="margin-bottom:.6em">Click any family cell to see the specific patents behind the rating. Each row shows the assignee, jurisdiction, status, and the LLM's plain-language explanation of why this patent poses a risk. Here: 3M and Henkel flagged in the acrylic family.</p>
+  <div style="text-align:center">
+    <img src="screenshots/10_acrylic_h.png"
+         style="max-width:100%; max-height:460px; border-radius:8px; border:1px solid #e2e8f0; box-shadow:0 4px 16px rgba(15,23,42,.1)"
+         alt="Acrylic family H-risk drilldown showing 3M and Henkel patents">
+  </div>
+</section>
+
+<!-- ══ W4 · SCREENSHOT — PATENT DETAIL ══════════════════════════════ -->
+<section>
+  <h2>Patent detail — claim-level LLM analysis</h2>
+  <p class="small muted" style="margin-bottom:.6em">Every patent has a full LLM risk assessment: bibliographic data, abstract, claim-by-claim analysis, and a plain-language verdict with specific reasoning. The output is ready to hand to a patent attorney as a structured brief.</p>
+  <div style="text-align:center">
+    <img src="screenshots/06_patent_detail.png"
+         style="max-width:100%; max-height:460px; border-radius:8px; border:1px solid #e2e8f0; box-shadow:0 4px 16px rgba(15,23,42,.1)"
+         alt="Individual patent detail page with LLM risk assessment">
+  </div>
+</section>
+
+<!-- ══ W5 · SCREENSHOT — WHITESPACE ════════════════════════════════ -->
+<section>
+  <h2>Whitespace analysis — where to file</h2>
+  <p class="small muted" style="margin-bottom:.6em">The whitespace view surfaces areas where patent filings are thin relative to the academic literature — gaps where new IP can be established. Anchored to the academic paper corpus so the signal reflects where science is moving, not just where filings have been.</p>
+  <div style="text-align:center">
+    <img src="screenshots/04_whitespace.png"
+         style="max-width:100%; max-height:460px; border-radius:8px; border:1px solid #e2e8f0; box-shadow:0 4px 16px rgba(15,23,42,.1)"
+         alt="Whitespace analysis view">
+  </div>
 </section>
 
 </div>

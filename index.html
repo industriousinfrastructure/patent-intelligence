@@ -1,0 +1,482 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Patent Intelligence Platform</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/night.css">
+  <style>
+    :root {
+      --accent: #4fc3f7;
+      --accent2: #81c784;
+      --warn: #ffb74d;
+      --danger: #e57373;
+    }
+    .reveal { font-size: 28px; }
+    .reveal h1 { font-size: 1.8em; color: var(--accent); }
+    .reveal h2 { font-size: 1.3em; color: var(--accent); border-bottom: 1px solid rgba(79,195,247,0.3); padding-bottom: 0.2em; }
+    .reveal h3 { font-size: 1.0em; color: #ccc; }
+    .reveal ul { list-style: none; padding: 0; }
+    .reveal ul li { padding: 0.3em 0; padding-left: 1.4em; position: relative; }
+    .reveal ul li::before { content: "→"; position: absolute; left: 0; color: var(--accent); }
+    .reveal .slides section { text-align: left; }
+    .reveal .slides section.center-slide { text-align: center; }
+    .pill {
+      display: inline-block;
+      padding: 0.15em 0.7em;
+      border-radius: 999px;
+      font-size: 0.65em;
+      font-weight: bold;
+      vertical-align: middle;
+      margin-left: 0.3em;
+    }
+    .pill-blue  { background: #1565c0; color: #fff; }
+    .pill-green { background: #2e7d32; color: #fff; }
+    .pill-amber { background: #e65100; color: #fff; }
+    .pill-grey  { background: #424242; color: #ddd; }
+    .pipeline {
+      display: flex;
+      align-items: center;
+      gap: 0.5em;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin: 1.2em 0;
+    }
+    .pipeline-step {
+      background: rgba(79,195,247,0.12);
+      border: 1px solid var(--accent);
+      border-radius: 8px;
+      padding: 0.5em 1em;
+      text-align: center;
+      font-size: 0.75em;
+    }
+    .pipeline-step .step-label { color: var(--accent); font-weight: bold; font-size: 1.1em; }
+    .pipeline-arrow { color: var(--accent); font-size: 1.3em; }
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5em; }
+    .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1em; margin-top: 1em; }
+    .card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 8px;
+      padding: 0.8em 1em;
+    }
+    .card-title { color: var(--accent); font-weight: bold; margin-bottom: 0.4em; font-size: 0.85em; }
+    .stat { font-size: 2em; font-weight: bold; color: var(--accent2); }
+    .stat-label { font-size: 0.6em; color: #aaa; }
+    .dim { color: #888; font-size: 0.8em; }
+    .accent { color: var(--accent); }
+    .accent2 { color: var(--accent2); }
+    .warn { color: var(--warn); }
+    .big-quote {
+      font-size: 1.1em;
+      font-style: italic;
+      color: #ddd;
+      border-left: 3px solid var(--accent);
+      padding-left: 1em;
+      margin: 1em 0;
+    }
+    table.compare { width: 100%; border-collapse: collapse; font-size: 0.75em; }
+    table.compare th { color: var(--accent); border-bottom: 1px solid rgba(79,195,247,0.4); padding: 0.4em 0.6em; text-align: left; }
+    table.compare td { padding: 0.4em 0.6em; border-bottom: 1px solid rgba(255,255,255,0.06); }
+    table.compare td.good { color: var(--accent2); font-weight: bold; }
+    table.compare td.bad  { color: var(--danger); }
+    .footer-note { font-size: 0.55em; color: #666; margin-top: 1.5em; }
+    .tag-row { display: flex; gap: 0.4em; flex-wrap: wrap; margin-top: 0.5em; }
+    .tag { background: rgba(79,195,247,0.15); border: 1px solid rgba(79,195,247,0.4); border-radius: 4px; padding: 0.1em 0.5em; font-size: 0.65em; color: var(--accent); }
+    .risk-h { color: #e57373; font-weight: bold; }
+    .risk-m { color: #ffb74d; font-weight: bold; }
+    .risk-l { color: #81c784; font-weight: bold; }
+    .circle-num {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 1.4em; height: 1.4em; border-radius: 50%;
+      background: var(--accent); color: #111; font-weight: bold;
+      font-size: 0.8em; margin-right: 0.4em; flex-shrink: 0;
+    }
+    .numbered-item { display: flex; align-items: flex-start; gap: 0.3em; margin-bottom: 0.5em; }
+    .numbered-item p { margin: 0; }
+  </style>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+<!-- ─── TITLE ─────────────────────────────────────────────────────────── -->
+<section class="center-slide">
+  <h1 style="font-size:2em; margin-bottom:0.2em">Patent Intelligence Platform</h1>
+  <p style="color:#aaa; font-size:0.9em">Open-source. Local-first. Built for research institutions.</p>
+  <div style="margin-top:2em">
+    <div class="tag-row" style="justify-content:center">
+      <span class="tag">Lens.org API</span>
+      <span class="tag">Local LLM</span>
+      <span class="tag">FTO Analysis</span>
+      <span class="tag">Whitespace Mapping</span>
+      <span class="tag">Paper–Patent Bridge</span>
+    </div>
+  </div>
+  <p style="margin-top:2.5em; color:#666; font-size:0.6em">May 2026</p>
+</section>
+
+<!-- ─── THE GAP ────────────────────────────────────────────────────────── -->
+<section>
+  <h2>The Problem</h2>
+  <div class="big-quote">
+    The bottleneck in IP strategy is not access to patent data — it is the cost of applying intelligence to that data at scale.
+  </div>
+  <div class="two-col" style="margin-top:1em">
+    <div>
+      <p style="color:var(--warn); font-weight:bold; margin-bottom:0.5em">Today's reality</p>
+      <ul>
+        <li>Commercial tools: €15–50k/seat/year</li>
+        <li>Attorney hours: €300–600/h for landscape work</li>
+        <li>Researchers file grants before IP check</li>
+        <li>TTOs react rather than monitor</li>
+        <li>Analysis is ad hoc, not reproducible</li>
+      </ul>
+    </div>
+    <div>
+      <p style="color:var(--accent2); font-weight:bold; margin-bottom:0.5em">What we want</p>
+      <ul>
+        <li>Structured landscape before attorney engagement</li>
+        <li>Proactive monitoring of research domains</li>
+        <li>Auditable, reproducible outputs</li>
+        <li>Cost model that scales with a university budget</li>
+        <li>Tool the research team can actually run</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ─── WHAT IT IS ─────────────────────────────────────────────────────── -->
+<section>
+  <h2>What This Is</h2>
+  <p class="dim">A self-hosted pipeline that takes a research domain and produces a structured IP landscape — using free public data and local compute.</p>
+  <div class="pipeline" style="margin-top:1.5em">
+    <div class="pipeline-step">
+      <div class="step-label">1. Define</div>
+      <div>Search terms<br>co-built with LLM</div>
+    </div>
+    <div class="pipeline-arrow">→</div>
+    <div class="pipeline-step">
+      <div class="step-label">2. Acquire</div>
+      <div>Patents + papers<br>via Lens.org API</div>
+    </div>
+    <div class="pipeline-arrow">→</div>
+    <div class="pipeline-step">
+      <div class="step-label">3. Store</div>
+      <div>Local database<br>structured metadata</div>
+    </div>
+    <div class="pipeline-arrow">→</div>
+    <div class="pipeline-step">
+      <div class="step-label">4. Analyse</div>
+      <div>LLM risk-tiers<br>every patent</div>
+    </div>
+    <div class="pipeline-arrow">→</div>
+    <div class="pipeline-step">
+      <div class="step-label">5. Explore</div>
+      <div>Web UI:<br>maps, drilldowns</div>
+    </div>
+  </div>
+  <p class="dim" style="text-align:center; margin-top:1em">Everything runs on your own infrastructure. No data leaves your network.</p>
+</section>
+
+<!-- ─── DATA ACQUISITION ───────────────────────────────────────────────── -->
+<section>
+  <h2>Data Acquisition — Lens.org</h2>
+  <div class="two-col">
+    <div>
+      <div class="card">
+        <div class="card-title">Patents</div>
+        <ul style="font-size:0.8em">
+          <li>120M+ patent documents worldwide</li>
+          <li>Jurisdiction, priority date, legal status</li>
+          <li>Forward citations, family size</li>
+          <li>Full claims text for LLM input</li>
+          <li>Free API tier available</li>
+        </ul>
+      </div>
+    </div>
+    <div>
+      <div class="card">
+        <div class="card-title">Scholarly Papers</div>
+        <ul style="font-size:0.8em">
+          <li>200M+ scholarly articles</li>
+          <li>Author affiliations, journal, year</li>
+          <li><strong class="accent">Patent citation count</strong> — how many patents cite each paper</li>
+          <li>Open access flag</li>
+          <li>Same API, same database</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="big-quote" style="margin-top:1em; font-size:0.8em">
+    Papers that suddenly attract patent citations are domains moving from academic to commercial. This signal is usually invisible to TTOs until a competitor has already filed.
+  </div>
+</section>
+
+<!-- ─── LLM ANALYSIS ──────────────────────────────────────────────────── -->
+<section>
+  <h2>LLM Analysis — The Core Innovation</h2>
+  <p class="dim">Each patent is sent to a local language model with a custom <strong>persona prompt</strong>.</p>
+  <div class="two-col" style="margin-top:0.8em">
+    <div>
+      <p style="color:var(--accent); font-weight:bold; font-size:0.85em; margin-bottom:0.4em">Persona examples</p>
+      <ul style="font-size:0.8em">
+        <li>FTO analyst — can we operate freely?</li>
+        <li>Patentability examiner — is there novelty?</li>
+        <li>Licensing officer — what's it worth?</li>
+        <li>Competitor analyst — where is the whitespace?</li>
+      </ul>
+      <p style="margin-top:0.8em; font-size:0.8em">Each persona produces:</p>
+      <ul style="font-size:0.8em">
+        <li><span class="risk-h">H</span> / <span class="risk-m">M</span> / <span class="risk-l">L</span> risk tier per patent</li>
+        <li>Plain-language summary</li>
+        <li>Claim-level reasoning</li>
+      </ul>
+    </div>
+    <div>
+      <p style="color:var(--accent2); font-weight:bold; font-size:0.85em; margin-bottom:0.4em">Why local LLM?</p>
+      <div class="card" style="font-size:0.8em">
+        <p>Running 800 patents through GPT-4: <span class="warn">~$200–400</span></p>
+        <p>Running 800 patents locally on a university GPU: <span class="accent2">~€0 marginal</span></p>
+        <p style="margin-top:0.5em">Models: Qwen, Llama, Mistral — all run on a single A100 or equivalent.</p>
+        <p style="margin-top:0.5em">No API keys. No data exfiltration. No usage caps.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── OUTPUTS ────────────────────────────────────────────────────────── -->
+<section>
+  <h2>What You Get Out</h2>
+  <div class="three-col">
+    <div class="card">
+      <div class="card-title">Chemistry / Tech Family Map</div>
+      <p style="font-size:0.75em">Patents auto-clustered by technology family. Whitespace visible at a glance — where is nobody filing?</p>
+    </div>
+    <div class="card">
+      <div class="card-title">Geographic Exposure</div>
+      <p style="font-size:0.75em">Filter by EP, WO, US, CN. See exactly where in the world risk exists — and where you have freedom to operate.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">Risk Drilldown</div>
+      <p style="font-size:0.75em">Click any H-risk cell → see the specific patents, their claims, LLM reasoning, and assignee. Brief attorney on exactly what matters.</p>
+    </div>
+  </div>
+  <div class="three-col" style="margin-top:0.8em">
+    <div class="card">
+      <div class="card-title">Academic Signal</div>
+      <p style="font-size:0.75em">Papers sorted by patent citation count. Track which research is being commercialised before the patents arrive.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">Corpus Snapshots</div>
+      <p style="font-size:0.75em">Every run stored and versioned. Quarterly landscape updates become a diff, not a rebuild from scratch.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">Analyst-ready Output</div>
+      <p style="font-size:0.75em">Present a structured 400-patent analysis to a patent attorney rather than a blank brief. Dramatically reduces billable hours.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── CASE STUDY ────────────────────────────────────────────────────── -->
+<section>
+  <h2>Case Study — MXene EMI Shielding</h2>
+  <p class="dim">Applied to a real research domain: Ti₃C₂ MXene as a conductive filler for EMI shielding adhesives.</p>
+  <div class="three-col" style="margin-top:0.8em">
+    <div style="text-align:center">
+      <div class="stat">14,000+</div>
+      <div class="stat-label">Patents collected</div>
+    </div>
+    <div style="text-align:center">
+      <div class="stat">2,000+</div>
+      <div class="stat-label">Academic papers</div>
+    </div>
+    <div style="text-align:center">
+      <div class="stat">~800</div>
+      <div class="stat-label">LLM-analyzed (adhesive focus)</div>
+    </div>
+  </div>
+  <div style="margin-top:1em">
+    <div class="numbered-item">
+      <span class="circle-num">1</span>
+      <p><strong>EP application layer identified as relatively open</strong> for MXene-adhesive formulations — actionable whitespace for provisional patent filing.</p>
+    </div>
+    <div class="numbered-item">
+      <span class="circle-num">2</span>
+      <p><strong>Primary EP blocker pinpointed:</strong> 3M conductive PSA (EP, 2006, ACTIVE) — attorney review scoped to one patent, not 14,000.</p>
+    </div>
+    <div class="numbered-item">
+      <span class="circle-num">3</span>
+      <p><strong>Competitor signal:</strong> Henkel EP pending (2021) in adjacent EMI adhesive space — both risk and potential licensing partner.</p>
+    </div>
+  </div>
+  <p class="footer-note">Total compute cost for LLM analysis: ~€0 marginal on local GPU.</p>
+</section>
+
+<!-- ─── FOR A TTO ─────────────────────────────────────────────────────── -->
+<section>
+  <h2>Specifically for a TTO</h2>
+  <div class="big-quote" style="font-size:0.85em">
+    TTOs currently wait for researchers to bring IP disclosures. This tool inverts that — you can monitor research areas proactively and bring IP opportunities to researchers before they publish.
+  </div>
+  <div class="two-col" style="margin-top:1em">
+    <div>
+      <p style="color:var(--accent2); font-weight:bold; font-size:0.85em">New capabilities</p>
+      <ul style="font-size:0.8em">
+        <li>Monitor any domain your researchers work in</li>
+        <li>Flag academics whose publications are getting patent citations</li>
+        <li>Quarterly landscape refresh is automated — not a manual project</li>
+        <li>One platform, many domains — build a library</li>
+      </ul>
+    </div>
+    <div>
+      <p style="color:var(--accent2); font-weight:bold; font-size:0.85em">Cost reduction</p>
+      <ul style="font-size:0.8em">
+        <li>Attorney prep: arrive with structured analysis not a blank brief → <strong class="accent2">save 10–30h per FTO</strong></li>
+        <li>No per-seat commercial licence needed</li>
+        <li>Self-hosted — IT can manage it like any other server</li>
+        <li>Open source — customise for your workflows</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ─── COST COMPARISON ────────────────────────────────────────────────── -->
+<section>
+  <h2>Cost Comparison</h2>
+  <table class="compare">
+    <thead>
+      <tr>
+        <th>Tool</th>
+        <th>Corpus size</th>
+        <th>LLM analysis</th>
+        <th>Annual cost</th>
+        <th>Data sovereignty</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>PatSnap / Questel</td>
+        <td>Large</td>
+        <td>Limited / extra</td>
+        <td class="bad">€20–50k/seat</td>
+        <td class="bad">Cloud (3rd party)</td>
+      </tr>
+      <tr>
+        <td>Derwent Innovation</td>
+        <td>Large</td>
+        <td>Partial</td>
+        <td class="bad">€15–30k/seat</td>
+        <td class="bad">Cloud (Clarivate)</td>
+      </tr>
+      <tr>
+        <td>Manual (attorney-led)</td>
+        <td>Small (ad hoc)</td>
+        <td>Attorney judgement</td>
+        <td class="bad">€300–600/h</td>
+        <td>Attorney–client</td>
+      </tr>
+      <tr style="background: rgba(129,199,132,0.08)">
+        <td><strong class="accent2">This platform</strong></td>
+        <td class="good">14k+ per domain</td>
+        <td class="good">Full — local GPU</td>
+        <td class="good">~€500 server/yr</td>
+        <td class="good">On-premises</td>
+      </tr>
+    </tbody>
+  </table>
+  <p class="dim" style="margin-top:1em">Lens.org free API tier: 1,000 requests/day. Academic/institutional tiers available. No per-patent charge.</p>
+</section>
+
+<!-- ─── ARCHITECTURE ───────────────────────────────────────────────────── -->
+<section>
+  <h2>Architecture — Open and Extensible</h2>
+  <div class="two-col">
+    <div>
+      <p style="color:var(--accent); font-weight:bold; font-size:0.85em">Stack</p>
+      <ul style="font-size:0.8em">
+        <li><strong>FastAPI</strong> — backend API + server-rendered UI</li>
+        <li><strong>SQLite WAL</strong> — portable, zero-admin database</li>
+        <li><strong>HTMX</strong> — live task progress, no JS framework</li>
+        <li><strong>Docker</strong> — one-command deploy</li>
+        <li><strong>Ollama / Atomic Chat</strong> — local LLM serving</li>
+      </ul>
+    </div>
+    <div>
+      <p style="color:var(--accent); font-weight:bold; font-size:0.85em">Extend it</p>
+      <ul style="font-size:0.8em">
+        <li>Add new analysis views (graph, timeline)</li>
+        <li>Custom LLM prompts per technology domain</li>
+        <li>Scheduled monitoring cron jobs</li>
+        <li>PDF report generation</li>
+        <li>Integration with university CRIS systems</li>
+      </ul>
+    </div>
+  </div>
+  <div style="margin-top:1em">
+    <p style="font-size:0.75em; color:#888">MIT licence. Self-host or collaborate. The architecture is intentionally simple — any developer familiar with Python can extend it.</p>
+  </div>
+</section>
+
+<!-- ─── PROPOSITION ────────────────────────────────────────────────────── -->
+<section>
+  <h2>The Proposition</h2>
+  <div class="three-col">
+    <div class="card">
+      <div class="card-title" style="color:var(--accent2)">Pilot</div>
+      <p style="font-size:0.78em">Pick 2–3 active research domains from your current TTO portfolio. We build the corpus, run the LLM analysis, and deliver a structured landscape report — in two weeks.</p>
+    </div>
+    <div class="card">
+      <div class="card-title" style="color:var(--accent)">Platform</div>
+      <p style="font-size:0.78em">Install on university infrastructure. Training for TTO staff. Custom persona prompts for your most common analysis types. You own it completely.</p>
+    </div>
+    <div class="card">
+      <div class="card-title" style="color:var(--warn)">Service</div>
+      <p style="font-size:0.78em">On-demand domain analyses for spin-outs and research groups. Structured landscape + attorney brief for a fraction of traditional costs.</p>
+    </div>
+  </div>
+  <div class="big-quote" style="margin-top:1.2em; font-size:0.85em">
+    The goal is not to replace patent attorneys. It is to radically reduce the cost and time to arrive at the point where attorney engagement is most valuable.
+  </div>
+</section>
+
+<!-- ─── CLOSE ──────────────────────────────────────────────────────────── -->
+<section class="center-slide">
+  <h2 style="text-align:center">Next Step</h2>
+  <p style="text-align:center; margin: 1em 0; color:#ddd">
+    A working system is running now.<br>
+    The MXene landscape took two weeks to build and analyse.
+  </p>
+  <div class="tag-row" style="justify-content:center; margin-top:1.5em">
+    <span class="tag">Live demo available</span>
+    <span class="tag">Open source</span>
+    <span class="tag">Self-hostable in one hour</span>
+  </div>
+  <p style="text-align:center; margin-top:2em; color:var(--accent); font-size:0.85em">
+    Interested in a pilot with your current portfolio?
+  </p>
+  <p style="margin-top:2.5em; color:#555; font-size:0.6em; text-align:center">
+    github.com/industriousinfrastructure/patent-intelligence
+  </p>
+</section>
+
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script>
+  Reveal.initialize({
+    hash: true,
+    transition: 'slide',
+    transitionSpeed: 'fast',
+    controls: true,
+    progress: true,
+    center: false,
+    width: 1100,
+    height: 700,
+    margin: 0.04,
+  });
+</script>
+</body>
+</html>

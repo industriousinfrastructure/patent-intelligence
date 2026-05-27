@@ -118,6 +118,23 @@
   <p style="margin-top:2.5em; color:#666; font-size:0.6em">May 2026</p>
 </section>
 
+<!-- ─── WHY WE BUILT THIS ──────────────────────────────────────────────── -->
+<section>
+  <h2>Why We Built This</h2>
+  <p style="color:#ddd; font-size:0.9em; margin-bottom:0.8em">
+    Material science is one of the most complex spaces to navigate for IP. Chemistry families span thousands of overlapping filings. Claim language is deliberately ambiguous. A single domain — say, conductive adhesives for EMI shielding — can touch a dozen subfields, each with its own patent thicket.
+  </p>
+  <p style="color:#ddd; font-size:0.9em; margin-bottom:0.8em">
+    The standard answer is: hire a specialist consultant or subscribe to an enterprise patent intelligence platform. Both cost serious money, and both put a researcher or early-stage team at the back of a queue.
+  </p>
+  <div class="big-quote" style="font-size:0.85em">
+    Without those resources, we built a tool that follows FTO best practice — using an LLM to read every relevant patent and check whatever hypothesis you need to test. A landscape that would take a consultant two weeks takes a few hours. On your own hardware. Cheaply.
+  </div>
+  <p style="color:#aaa; font-size:0.8em; margin-top:0.8em">
+    The goal: quickly iterate, inform researchers early, and reduce consultant spend to the decisions that actually need a lawyer.
+  </p>
+</section>
+
 <!-- ─── THE GAP ────────────────────────────────────────────────────────── -->
 <section>
   <h2>The Problem</h2>
@@ -343,6 +360,31 @@
   </div>
 </section>
 
+<!-- ─── MARKET VALIDATION ─────────────────────────────────────────────── -->
+<section>
+  <h2>The Market Is Moving This Way</h2>
+  <div class="two-col">
+    <div>
+      <div class="card">
+        <div class="card-title">Patlytics — $65M raised</div>
+        <p style="font-size:0.78em">New York startup founded 2024. Raised $14M Series A (Feb 2025) then $40M Series B (April 2026). Used by 40%+ of Am Law 100 firms and corporates including Rivian, Canon, Xerox. Claims: 80% reduction in project time, $30k saved per claim chart.</p>
+        <p style="font-size:0.72em; color:#aaa; margin-top:0.5em">Target market: law firms, large corporate IP teams. Price: enterprise (quoted).</p>
+      </div>
+    </div>
+    <div>
+      <div class="card">
+        <div class="card-title">IPRally — $13M raised</div>
+        <p style="font-size:0.78em">Finnish startup, graph-based AI patent search. Series A 2023. Customers include Nvidia, Dolby, Bentley. Focus: patentability, FTO, invalidity search via knowledge graph rather than keyword matching.</p>
+        <p style="font-size:0.72em; color:#aaa; margin-top:0.5em">Target market: corporate IP teams, large firms. Price: enterprise.</p>
+      </div>
+    </div>
+  </div>
+  <div class="big-quote" style="margin-top:1em; font-size:0.82em">
+    $65M into Patlytics alone validates that LLM-assisted patent analysis is a real, large market. The gap these tools leave is the research institution end — universities, public labs, early-stage spinouts — where enterprise pricing is prohibitive and data sovereignty matters.
+  </div>
+  <p style="font-size:0.7em; color:#888; margin-top:0.5em">That is the gap this platform addresses.</p>
+</section>
+
 <!-- ─── COST COMPARISON ────────────────────────────────────────────────── -->
 <section>
   <h2>Cost Comparison</h2>
@@ -360,16 +402,23 @@
       <tr>
         <td>PatSnap / Questel</td>
         <td>Large</td>
-        <td>Limited / extra</td>
-        <td class="bad">€20–50k/seat</td>
+        <td>Add-on module</td>
+        <td class="bad">$15–40k/yr (team)</td>
         <td class="bad">Cloud (3rd party)</td>
       </tr>
       <tr>
         <td>Derwent Innovation</td>
         <td>Large</td>
         <td>Partial</td>
-        <td class="bad">€15–30k/seat</td>
+        <td class="bad">$15–30k/yr (team)</td>
         <td class="bad">Cloud (Clarivate)</td>
+      </tr>
+      <tr>
+        <td>Patlytics (AI-native)</td>
+        <td>Full</td>
+        <td>Core feature</td>
+        <td class="bad">Enterprise (quoted)</td>
+        <td class="bad">Cloud (US)</td>
       </tr>
       <tr>
         <td>Manual (attorney-led)</td>

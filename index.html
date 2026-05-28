@@ -124,6 +124,13 @@
 
     hr.rule { border: none; border-top: 1px solid #e2e8f0; margin: .8em 0; }
 
+    /* mobile — larger tap targets for controls */
+    @media (max-width: 768px) {
+      .reveal .controls { font-size: 18px; bottom: 12px; right: 12px; }
+      .reveal .controls button { padding: 8px; }
+      .reveal .progress { height: 5px; }
+    }
+
     /* report mockup */
     .report-preview {
       background: #fff; border: 1px solid #e2e8f0; border-radius: 10px;
@@ -488,6 +495,8 @@
     transition: 'fade',
     transitionSpeed: 'fast',
     controls: true,
+    controlsLayout: 'bottom-right',
+    touch: true,
     progress: true,
     slideNumber: 'c/t',
     center: false,
